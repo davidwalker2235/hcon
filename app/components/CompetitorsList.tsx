@@ -23,6 +23,7 @@ export default function CompetitorsList() {
           iconColor={competitor.iconColor}
           arrow={index === 0 ? "up" : index === 1 ? "down" : undefined}
           arrowSize={60}
+          index={index}
         />
       ))}
     </div>
