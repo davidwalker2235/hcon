@@ -12,7 +12,7 @@ export default function PlanRow({ title, iconColor, arrow, arrowSize = 32 }: Pla
   const arrowColor = arrow === "up" ? "#22c55e" : arrow === "down" ? "#ef4444" : undefined;
   
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-3 sm:p-4 flex items-center gap-3 sm:gap-4 w-full">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-3 sm:p-4 flex items-center gap-3 sm:gap-4 w-full h-[72px] sm:h-[88px]">
       {/* Icono con círculo azul claro */}
       <div className="flex-shrink-0">
         <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center">
@@ -52,12 +52,12 @@ export default function PlanRow({ title, iconColor, arrow, arrowSize = 32 }: Pla
         <h3 className="text-lg sm:text-xl font-bold text-gray-800">{title}</h3>
       </div>
       
-      {/* Flecha en la parte derecha */}
-      {arrow && arrowColor && (
-        <div className="flex-shrink-0 flex items-center justify-center">
+      {/* Flecha en la parte derecha - siempre reservamos el espacio para mantener altura uniforme */}
+      <div className="flex-shrink-0 flex items-center justify-center h-full" style={{ width: arrowSize }}>
+        {arrow && arrowColor && (
           <ArrowIcon direction={arrow} color={arrowColor} size={arrowSize} />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
