@@ -87,7 +87,7 @@ export function useFirebaseRealtime<T = any>(
   const { path, subscribe = true, transform } = options;
   
   const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(subscribe); // Solo loading inicial si hay suscripción
   const [error, setError] = useState<Error | null>(null);
   
   const unsubscribeRef = useRef<(() => void) | null>(null);
@@ -115,23 +115,27 @@ export function useFirebaseRealtime<T = any>(
    */
   const read = useCallback(async (): Promise<T | null> => {
     try {
+      console.log('Firebase read called for path:', path);
       setLoading(true);
       setError(null);
       
       const snapshot = await get(nodeRef);
+      console.log('Firebase snapshot:', snapshot.exists() ? snapshot.val() : 'No data');
       const transformedData = transformData(snapshot);
+      console.log('Transformed data:', transformedData);
       
       setData(transformedData);
       setLoading(false);
       
       return transformedData;
     } catch (err) {
+      console.error('Firebase read error:', err);
       const error = err instanceof Error ? err : new Error('Error al leer los datos');
       setError(error);
       setLoading(false);
       throw error;
     }
-  }, [nodeRef, transformData]);
+  }, [nodeRef, transformData, path]);
 
   /**
    * Escribe/reescribe datos en el nodo
@@ -190,8 +194,8 @@ export function useFirebaseRealtime<T = any>(
    */
   useEffect(() => {
     if (!subscribe) {
-      // Si no hay suscripción, solo leer una vez
-      read().catch(console.error);
+      // Si no hay suscripción, no hacer nada automáticamente
+      // El usuario debe llamar a read() manualmente
       return;
     }
 

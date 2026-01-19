@@ -1,39 +1,30 @@
 export interface Competitor {
-  title: string;
-  iconColor: string;
+  nickname?: string;
 }
 
 export const mockCompetitors: Competitor[] = [
   {
-    title: "ZeroCool",
-    iconColor: "#4ade80"
+    nickname: "ZeroCool"
   },
   {
-    title: "AcidBurn",
-    iconColor: "#3b82f6"
+    nickname: "AcidBurn"
   },
   {
-    title: "CrashOverride",
-    iconColor: "#f97316"
+    nickname: "CrashOverride"
   },
   {
-    title: "CerealKiller",
-    iconColor: "#8b5cf6"
+    nickname: "CerealKiller"
   },
   {
-    title: "ThePlague",
-    iconColor: "#06b6d4"
+    nickname: "ThePlague"
   },
   {
-    title: "PhiberOptik",
-    iconColor: "#10b981"
+    nickname: "PhiberOptik"
   },
   {
-    title: "LordNikon",
-    iconColor: "#f59e0b"
+    nickname: "LordNikon"
   },
   {
-    title: "Trinity",
-    iconColor: "#ec4899"
+    nickname: "Trinity"
   }
 ];

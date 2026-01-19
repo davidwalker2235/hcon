@@ -19,8 +19,8 @@ export default function CompetitorsList() {
       {competitors.map((competitor, index) => (
         <ListRow
           key={index}
-          title={competitor.title}
-          iconColor={competitor.iconColor}
+          title={competitor.nickname || ''}
+          iconColor={'#000000'}
           arrow={index === 0 ? "up" : index === 1 ? "down" : undefined}
           arrowSize={60}
           index={index}
