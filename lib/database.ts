@@ -1,10 +1,12 @@
 import { mockCompetitors, Competitor } from './mockData';
+import { database as firebaseDatabase } from './firebase';
+import { ref, get } from 'firebase/database';
 
 /**
  * Configuración del tipo de base de datos a usar
- * Cambiar a 'real' cuando se implemente la conexión real
+ * Cambiar a 'mock' para usar datos de prueba o 'real' para Firebase
  */
-const DB_MODE: 'mock' | 'real' = 'mock';
+const DB_MODE: 'mock' | 'real' = 'real';
 
 /**
  * Interfaz para el módulo de base de datos
@@ -27,25 +29,34 @@ class MockDatabaseAdapter implements DatabaseAdapter {
 }
 
 /**
- * Implementación para base de datos real
- * TODO: Implementar cuando se decida qué base de datos usar
- * Ejemplos:
- * - PostgreSQL: usar pg o postgres.js
- * - MongoDB: usar mongodb o mongoose
- * - MySQL: usar mysql2
- * - Supabase: usar @supabase/supabase-js
- * - Firebase: usar firebase-admin
+ * Implementación para Firebase Realtime Database
  */
 class RealDatabaseAdapter implements DatabaseAdapter {
   async getCompetitors(): Promise<Competitor[]> {
-    // TODO: Implementar conexión real a la base de datos
-    // Ejemplo para PostgreSQL:
-    // const client = new Client({ connectionString: process.env.DATABASE_URL });
-    // await client.connect();
-    // const result = await client.query('SELECT * FROM competitors');
-    // return result.rows;
-    
-    throw new Error('Base de datos real no implementada aún');
+    try {
+      // Referencia a la colección de competidores en Firebase
+      // Ajusta la ruta según la estructura de tu base de datos
+      const competitorsRef = ref(firebaseDatabase, 'competitors');
+      const snapshot = await get(competitorsRef);
+      
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        // Convertir el objeto de Firebase a un array
+        if (Array.isArray(data)) {
+          return data.filter((item: any) => item !== null);
+        } else if (typeof data === 'object') {
+          // Si Firebase devuelve un objeto con keys, convertirlo a array
+          return Object.values(data).filter((item: any) => item !== null) as Competitor[];
+        }
+        return [];
+      } else {
+        // Si no hay datos en Firebase, devolver array vacío
+        return [];
+      }
+    } catch (error) {
+      console.error('Error fetching competitors from Firebase:', error);
+      throw new Error('Error al obtener los competidores de Firebase');
+    }
   }
 }
 
