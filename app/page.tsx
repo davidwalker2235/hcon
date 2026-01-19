@@ -45,7 +45,7 @@ export default function Home() {
                 </p>
               </div>
               
-              <div className="mt-12 flex flex-col items-center gap-4">
+              <div className="mt-12 flex justify-center">
                 <Image
                   src="/QRCode.png"
                   alt="QR Code"
@@ -53,7 +53,6 @@ export default function Home() {
                   height={300}
                   className="object-contain"
                 />
-                <CompetitorsWrapper />
               </div>
             </div>
           </div>
@@ -67,7 +66,7 @@ export default function Home() {
             backgroundPosition: 'center',
           }}
         >
-          <CompetitorsWrapper showList={true} />
+          <CompetitorsWrapper />
         </div>
       </div>
     </CompetitorsProvider>

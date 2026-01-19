@@ -1,21 +1,20 @@
 'use client';
 
-import { createContext, useContext, ReactNode, useMemo, useCallback } from 'react';
+import { createContext, useContext, ReactNode, useMemo } from 'react';
 import { useFirebaseRealtime } from '../../lib/hooks/useFirebaseRealtime';
 import { Competitor } from '../../lib/mockData';
 
 interface CompetitorsContextType {
   competitors: Competitor[];
   isLoading: boolean;
-  loadCompetitors: () => Promise<void>;
 }
 
 const CompetitorsContext = createContext<CompetitorsContextType | undefined>(undefined);
 
 export function CompetitorsProvider({ children }: { children: ReactNode }) {
-  const { data, loading, read } = useFirebaseRealtime<Record<string, any>>({
+  const { data, loading } = useFirebaseRealtime<Record<string, any>>({
     path: 'ranking',
-    subscribe: false, // Solo leer cuando se pulse el botón
+    subscribe: true, // Suscribirse a cambios en tiempo real
     transform: (firebaseData) => {
       // Convertir el objeto de Firebase a un array
       if (!firebaseData) return {};
@@ -48,24 +47,11 @@ export function CompetitorsProvider({ children }: { children: ReactNode }) {
       });
   }, [data]);
 
-  // Memoizar la función loadCompetitors
-  const loadCompetitors = useCallback(async () => {
-    try {
-      console.log('Loading competitors from Firebase...');
-      const result = await read();
-      console.log('Data loaded from Firebase:', result);
-    } catch (error) {
-      console.error('Error loading data:', error);
-      alert('Error loading data. Please try again.');
-    }
-  }, [read]);
-
   // Memoizar el valor del contexto
   const contextValue = useMemo(() => ({
     competitors: competitorsArray,
     isLoading: loading,
-    loadCompetitors,
-  }), [competitorsArray, loading, loadCompetitors]);
+  }), [competitorsArray, loading]);
 
   return (
     <CompetitorsContext.Provider value={contextValue}>
