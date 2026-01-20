@@ -54,7 +54,7 @@ export default function Home() {
                   height={300}
                   className="object-contain"
                 />
-                <UploadMockRankingButton />
+                {/*<UploadMockRankingButton />*/}
               </div>
             </div>
           </div>
