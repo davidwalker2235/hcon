@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { ref, get, set, update, remove, onValue, DataSnapshot } from 'firebase/database';
 import { database } from '../firebase';
 
@@ -91,7 +91,7 @@ export function useFirebaseRealtime<T = any>(
   const [error, setError] = useState<Error | null>(null);
   
   const unsubscribeRef = useRef<(() => void) | null>(null);
-  const nodeRef = ref(database, path);
+  const nodeRef = useMemo(() => ref(database, path), [path]);
 
   /**
    * Transforma los datos de Firebase según la función proporcionada

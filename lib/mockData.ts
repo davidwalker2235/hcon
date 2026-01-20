@@ -6,7 +6,7 @@ export interface Competitor {
 export const mockCompetitors: Competitor[] = [
   {
     "email": "",
-    "nickname": "CerealKiller"
+    "nickname": "AcidBurn"
   },
   {
     "email": "",
@@ -14,7 +14,7 @@ export const mockCompetitors: Competitor[] = [
   },
   {
     "email": "",
-    "nickname": "ThePlague"
+    "nickname": "Trinity"
   },
   {
     "email": "",
@@ -22,10 +22,10 @@ export const mockCompetitors: Competitor[] = [
   },
   {
     "email": "",
-    "nickname": "AcidBurn"
+    "nickname": "CerealKiller"
   },
   {
     "email": "",
-    "nickname": "Trinity"
+    "nickname": "ThePlague"
   },
 ];
