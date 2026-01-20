@@ -1,30 +1,31 @@
 export interface Competitor {
+  email?: string;
   nickname?: string;
 }
 
 export const mockCompetitors: Competitor[] = [
   {
-    nickname: "ZeroCool"
+    "email": "",
+    "nickname": "CerealKiller"
   },
   {
-    nickname: "AcidBurn"
+    "email": "",
+    "nickname": "PhiberOptik"
   },
   {
-    nickname: "CrashOverride"
+    "email": "",
+    "nickname": "ThePlague"
   },
   {
-    nickname: "CerealKiller"
+    "email": "",
+    "nickname": "CrashOverride"
   },
   {
-    nickname: "ThePlague"
+    "email": "",
+    "nickname": "AcidBurn"
   },
   {
-    nickname: "PhiberOptik"
+    "email": "",
+    "nickname": "Trinity"
   },
-  {
-    nickname: "LordNikon"
-  },
-  {
-    nickname: "Trinity"
-  }
 ];

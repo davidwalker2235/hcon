@@ -1,5 +1,6 @@
 'use client';
 
+import { LayoutGroup, motion } from 'framer-motion';
 import ListRow from './ListRow';
 import { useCompetitors } from './CompetitorsContext';
 
@@ -15,17 +16,20 @@ export default function CompetitorsList() {
   }
 
   return (
-    <div className="flex flex-col gap-1.5">
-      {competitors.map((competitor, index) => (
-        <ListRow
-          key={index}
-          title={competitor.nickname || ''}
-          iconColor={'#000000'}
-          arrow={index === 0 ? "up" : index === 1 ? "down" : undefined}
-          arrowSize={60}
-          index={index}
-        />
-      ))}
-    </div>
+    <LayoutGroup>
+      <motion.div className="flex flex-col gap-1.5">
+        {competitors.map((competitor, index) => (
+          <ListRow
+            key={competitor.id}
+            id={competitor.id}
+            title={competitor.nickname || ''}
+            iconColor={'#000000'}
+            arrow={competitor.movementDirection ?? undefined}
+            arrowSize={60}
+            index={index}
+          />
+        ))}
+      </motion.div>
+    </LayoutGroup>
   );
 }

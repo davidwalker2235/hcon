@@ -1,6 +1,7 @@
 import Image from "next/image";
 import CompetitorsWrapper from "./components/CompetitorsWrapper";
 import { CompetitorsProvider } from "./components/CompetitorsContext";
+import UploadMockRankingButton from "./components/UploadMockRankingButton";
 
 export default function Home() {
   return (
@@ -45,7 +46,7 @@ export default function Home() {
                 </p>
               </div>
               
-              <div className="mt-12 flex justify-center">
+              <div className="mt-12 flex flex-col items-center gap-6">
                 <Image
                   src="/QRCode.png"
                   alt="QR Code"
@@ -53,6 +54,7 @@ export default function Home() {
                   height={300}
                   className="object-contain"
                 />
+                <UploadMockRankingButton />
               </div>
             </div>
           </div>
