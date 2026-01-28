@@ -3,8 +3,11 @@ export interface Competitor {
   nickname?: string;
   rank?: number;
   highest_level?: number;
+  highestLevel?: number;
   completed_at?: string;
+  completedAt?: string;
   total_attempts?: number;
+  totalAttempts?: number;
 }
 
 export const mockCompetitors: Competitor[] = [
