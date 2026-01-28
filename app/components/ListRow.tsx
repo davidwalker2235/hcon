@@ -44,7 +44,8 @@ export default function ListRow({
   highestLevel,
   totalAttempts,
 }: ListRowProps) {
-  const arrowColor = arrow === "up" ? "#22c55e" : arrow === "down" ? "#ef4444" : undefined;
+  const hasMovement = arrow === "up" || arrow === "down";
+  const arrowColor = arrow === "up" ? "#22c55e" : arrow === "down" ? "#ef4444" : "#2563eb";
   const displayNumber = index + 1;
   const formattedCompletedAt = formatCompletedAt(completedAt);
   const levelDisplay = highestLevel !== undefined ? highestLevel : "-";
@@ -71,17 +72,23 @@ export default function ListRow({
         <h3 className="text-lg sm:text-xl font-bold text-gray-800">{title}</h3>
       </div>
 
-      <div className="flex-shrink-0 flex flex-col justify-center gap-0.5 text-[11px] sm:text-[12px] leading-snug text-gray-700 max-w-[170px]">
-        <span className="text-[11px] font-semibold text-gray-900">
-          Completed at: <span className="font-normal text-gray-600">{formattedCompletedAt}</span>
+      <div className="flex-shrink-0 flex flex-col justify-center gap-0.5 text-[11px] sm:text-[12px] leading-snug text-gray-700 max-w-[200px]">
+        <span className="text-[11px] font-semibold text-gray-900 whitespace-nowrap overflow-hidden text-ellipsis">
+          Completed at: <span className="font-normal text-gray-600 whitespace-nowrap">{formattedCompletedAt}</span>
         </span>
-        <span className="text-[11px] font-semibold text-gray-900">Level: <span className="font-normal text-gray-600">{levelDisplay}</span></span>
-        <span className="text-[11px] font-semibold text-gray-900">Attempts: <span className="font-normal text-gray-600">{attemptsDisplay}</span></span>
+        <span className="text-[11px] font-semibold text-gray-900 whitespace-nowrap">
+          Level: <span className="font-normal text-gray-600">{levelDisplay}</span>
+        </span>
+        <span className="text-[11px] font-semibold text-gray-900 whitespace-nowrap">
+          Attempts: <span className="font-normal text-gray-600">{attemptsDisplay}</span>
+        </span>
       </div>
 
       <div className="flex-shrink-0 flex items-center justify-center h-full" style={{ width: arrowSize }}>
-        {arrow && arrowColor && (
-          <ArrowIcon direction={arrow} color={arrowColor} size={arrowSize} />
+        {hasMovement ? (
+          <ArrowIcon direction={arrow!} color={arrowColor} size={arrowSize} />
+        ) : (
+          <span className="text-3xl font-black text-[#2563eb] leading-none">=</span>
         )}
       </div>
     </motion.div>
