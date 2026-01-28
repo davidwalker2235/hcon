@@ -23,10 +23,12 @@ export default function CompetitorsList() {
             key={competitor.id}
             id={competitor.id}
             title={competitor.nickname || ''}
-            iconColor={'#000000'}
             arrow={competitor.movementDirection ?? undefined}
             arrowSize={60}
             index={index}
+            completedAt={competitor.completedAt}
+            highestLevel={competitor.highestLevel}
+            totalAttempts={competitor.totalAttempts}
           />
         ))}
       </motion.div>

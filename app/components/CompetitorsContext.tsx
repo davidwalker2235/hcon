@@ -4,8 +4,12 @@ import { createContext, useContext, ReactNode, useMemo, useRef } from 'react';
 import { useFirebaseRealtime } from '../../lib/hooks/useFirebaseRealtime';
 import { Competitor } from '../../lib/mockData';
 
-interface RankedCompetitor extends Competitor {
+interface RankedCompetitor {
   id: string;
+  nickname?: string;
+  highestLevel?: number;
+  completedAt?: string;
+  totalAttempts?: number;
   movementDirection: 'up' | 'down' | null;
 }
 
@@ -67,6 +71,9 @@ export function CompetitorsProvider({ children }: { children: ReactNode }) {
       return {
         id,
         nickname: payload?.nickname,
+        highestLevel: payload?.highest_level ?? payload?.highestLevel,
+        completedAt: payload?.completed_at ?? payload?.completedAt,
+        totalAttempts: payload?.total_attempts ?? payload?.totalAttempts,
         movementDirection,
       };
     });

@@ -7,19 +7,48 @@ interface ListRowProps {
   id: string;
   title: string;
   description?: string;
-  iconColor: string;
   arrow?: "up" | "down";
   arrowSize?: number;
   index?: number;
+  completedAt?: string;
+  highestLevel?: number;
+  totalAttempts?: number;
 }
 
-export default function ListRow({ id, title, iconColor, arrow, arrowSize = 32, index = 0 }: ListRowProps) {
+const completedDateFormatter = new Intl.DateTimeFormat("es-ES", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+});
+
+const formatCompletedAt = (value?: string) => {
+  if (!value) {
+    return "-";
+  }
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "-";
+  }
+  return completedDateFormatter.format(date);
+};
+
+export default function ListRow({
+  id,
+  title,
+  arrow,
+  arrowSize = 32,
+  index = 0,
+  completedAt,
+  highestLevel,
+  totalAttempts,
+}: ListRowProps) {
   const arrowColor = arrow === "up" ? "#22c55e" : arrow === "down" ? "#ef4444" : undefined;
-  const isColored = index < 3;
-  const iconStrokeColor = isColored ? iconColor : "#000000";
-  const iconFillColor = isColored ? iconColor : "#ffffff";
-  
   const displayNumber = index + 1;
+  const formattedCompletedAt = formatCompletedAt(completedAt);
+  const levelDisplay = highestLevel !== undefined ? highestLevel : "-";
+  const attemptsDisplay = totalAttempts !== undefined ? totalAttempts : "-";
 
   return (
     <motion.div
@@ -37,11 +66,19 @@ export default function ListRow({ id, title, iconColor, arrow, arrowSize = 32, i
           {displayNumber}
         </span>
       </div>
-      
+
       <div className="flex-1 min-w-0">
         <h3 className="text-lg sm:text-xl font-bold text-gray-800">{title}</h3>
       </div>
-      
+
+      <div className="flex-shrink-0 flex flex-col justify-center gap-0.5 text-[11px] sm:text-[12px] leading-snug text-gray-700 max-w-[170px]">
+        <span className="text-[11px] font-semibold text-gray-900">
+          Completed at: <span className="font-normal text-gray-600">{formattedCompletedAt}</span>
+        </span>
+        <span className="text-[11px] font-semibold text-gray-900">Level: <span className="font-normal text-gray-600">{levelDisplay}</span></span>
+        <span className="text-[11px] font-semibold text-gray-900">Attempts: <span className="font-normal text-gray-600">{attemptsDisplay}</span></span>
+      </div>
+
       <div className="flex-shrink-0 flex items-center justify-center h-full" style={{ width: arrowSize }}>
         {arrow && arrowColor && (
           <ArrowIcon direction={arrow} color={arrowColor} size={arrowSize} />
