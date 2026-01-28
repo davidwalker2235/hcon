@@ -18,7 +18,7 @@ const CompetitorsContext = createContext<CompetitorsContextType | undefined>(und
 
 export function CompetitorsProvider({ children }: { children: ReactNode }) {
   const { data, loading } = useFirebaseRealtime<any>({
-    path: 'ranking',
+    path: 'leaderboard',
     subscribe: true,
   });
 

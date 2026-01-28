@@ -5,9 +5,9 @@ import { useFirebaseRealtime } from '../../lib/hooks/useFirebaseRealtime';
 import { mockCompetitors, Competitor } from '../../lib/mockData';
 
 const statuses = {
-  idle: 'Cargar ranking mock',
+  idle: 'Cargar leaderboard mock',
   saving: 'Subiendo datos...',
-  success: 'Ranking actualizado',
+  success: 'Leaderboard actualizado',
   error: 'Error al subir'
 } as const;
 
@@ -16,7 +16,7 @@ type StatusKey = keyof typeof statuses;
 export default function UploadMockRankingButton() {
   const [status, setStatus] = useState<StatusKey>('idle');
   const { write } = useFirebaseRealtime<Competitor[]>({
-    path: 'ranking',
+    path: 'leaderboard',
     subscribe: false,
   });
 
@@ -27,7 +27,7 @@ export default function UploadMockRankingButton() {
       setStatus('success');
       setTimeout(() => setStatus('idle'), 2500);
     } catch (err) {
-      console.error('Error subiendo ranking mock', err);
+      console.error('Error subiendo leaderboard mock', err);
       setStatus('error');
     }
   }, [write]);
@@ -43,7 +43,7 @@ export default function UploadMockRankingButton() {
         {statuses[status]}
       </button>
       {status === 'error' && (
-        <p className="text-sm text-red-500">No se pudo actualizar el ranking.</p>
+        <p className="text-sm text-red-500">No se pudo actualizar el leaderboard.</p>
       )}
     </div>
   );
