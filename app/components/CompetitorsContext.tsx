@@ -78,8 +78,9 @@ export function CompetitorsProvider({ children }: { children: ReactNode }) {
       };
     });
 
-    previousOrderRef.current = normalizeEntries.map(({ id }) => id);
-    return ranked;
+    const topNine = ranked.slice(0, 9);
+    previousOrderRef.current = topNine.map(({ id }) => id);
+    return topNine;
   }, [normalizeEntries]);
 
   const contextValue = useMemo(() => ({
