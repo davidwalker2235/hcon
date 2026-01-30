@@ -101,6 +101,12 @@ export default function Home() {
                   </div>
 
                   <div className="mt-12 flex flex-col items-center gap-6">
+                    <p
+                      className="text-center text-xl font-medium text-gray-800"
+                      style={{ fontFamily: "sans-serif" }}
+                    >
+                      Discover who we are
+                    </p>
                     <Image
                       src="/QRCode.png"
                       alt="QR Code"
