@@ -57,8 +57,8 @@ export default function Home() {
                   <Image
                     src="/erni_logo.jpeg"
                     alt="ERNI Logo"
-                    width={150}
-                    height={60}
+                    width={100}
+                    height={30}
                     priority
                     className="object-contain"
                   />
