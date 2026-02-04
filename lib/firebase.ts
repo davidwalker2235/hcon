@@ -47,14 +47,14 @@ export const database: Database = getDatabase(app);
 
 /**
  * Sign in with the reader email/password from env.
- * Call this from a client component (e.g. in useEffect) when you need auth,
- * not at module load time.
+ * Call this from a client component (e.g. in useEffect) when you need auth.
+ * If the env vars are not set, skips sign-in and resolves (app still loads; Firebase may fail if rules require auth).
  */
-export async function signInAsReader(): Promise<UserCredential> {
+export async function signInAsReader(): Promise<UserCredential | null> {
   const email = process.env.NEXT_PUBLIC_FIREBASE_READER_EMAIL;
   const password = process.env.NEXT_PUBLIC_FIREBASE_READER_PASSWORD;
   if (!email || !password) {
-    throw new Error("NEXT_PUBLIC_FIREBASE_READER_EMAIL and NEXT_PUBLIC_FIREBASE_READER_PASSWORD must be set");
+    return null;
   }
   return signInWithEmailAndPassword(auth, email, password);
 }

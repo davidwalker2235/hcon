@@ -1,7 +1,8 @@
 'use client';
 
-import { createContext, useContext, ReactNode, useMemo, useRef } from 'react';
+import { createContext, useContext, ReactNode, useMemo, useRef, useState, useEffect } from 'react';
 import { useFirebaseRealtime } from '../../lib/hooks/useFirebaseRealtime';
+import { signInAsReader } from '../../lib/firebase';
 import { Competitor } from '../../lib/mockData';
 
 interface RankedCompetitor {
@@ -21,6 +22,29 @@ interface CompetitorsContextType {
 const CompetitorsContext = createContext<CompetitorsContextType | undefined>(undefined);
 
 export function CompetitorsProvider({ children }: { children: ReactNode }) {
+  const [authReady, setAuthReady] = useState(false);
+
+  useEffect(() => {
+    signInAsReader()
+      .then(() => setAuthReady(true))
+      .catch((err) => {
+        console.error('Firebase auth failed:', err);
+        setAuthReady(true);
+      });
+  }, []);
+
+  if (!authReady) {
+    return (
+      <CompetitorsContext.Provider value={{ competitors: [], isLoading: true }}>
+        {children}
+      </CompetitorsContext.Provider>
+    );
+  }
+
+  return <CompetitorsProviderInner>{children}</CompetitorsProviderInner>;
+}
+
+function CompetitorsProviderInner({ children }: { children: ReactNode }) {
   const { data, loading } = useFirebaseRealtime<any>({
     path: 'leaderboard',
     subscribe: true,
