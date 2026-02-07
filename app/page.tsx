@@ -9,7 +9,7 @@ import UploadMockRankingButton from "./components/UploadMockRankingButton";
 import { useEffect, useState } from "react";
 
 const GIF_DURATION_MS = 18_000;
-const PANEL_DELAY_MS = 60_000;
+const PANEL_DELAY_MS = 15_000;
 
 export default function Home() {
   const [showGif, setShowGif] = useState(false);
